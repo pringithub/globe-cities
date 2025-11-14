@@ -1,0 +1,273 @@
+/* Header */
+.app-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: linear-gradient(135deg, rgba(30, 60, 114, 0.95), rgba(42, 82, 152, 0.95));
+  color: white;
+  padding: 16px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.app-header p {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+/* Settings button in header */
+.settings-button {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: white;
+}
+
+.settings-button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Sidebar toggle button (hidden by default, shown on mobile) */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  z-index: 1100;
+}
+
+/* MapLibre marker container z-index control */
+.maplibregl-marker {
+  z-index: 1 !important;
+}
+
+.maplibregl-marker.selected {
+  z-index: 100 !important;
+}
+
+.maplibregl-canvas-container {
+  z-index: 0 !important;
+}
+
+/* Chevron toggle button on the right edge of sidebar */
+.sidebar-chevron-toggle {
+  position: absolute;
+  right: -32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 32px;
+  height: 64px;
+  background: white;
+  border: 1px solid #ccc;
+  border-left: none;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.2s;
+}
+
+.sidebar-chevron-toggle:hover {
+  background: #f8f8f8;
+}
+
+/* Floating Sidebar */
+.floating-sidebar {
+  position: absolute;
+  top: 100px;
+  left: 16px;
+  z-index: 1500;
+  background: transparent;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-height: calc(100vh - 120px);
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s cubic-bezier(.4, 0, .2, 1), left 0.3s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Sidebar open state for mobile */
+.floating-sidebar.open {
+  transform: none;
+}
+
+/* Floating City Details */
+.floating-city-details {
+  position: absolute;
+  top: 100px;
+  right: 16px;
+  z-index: 1500;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+  min-width: 280px;
+  transition: all 0.3s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Overlay for closing sidebar on mobile */
+.sidebar-backdrop {
+  display: none;
+}
+
+/* Close button for city details */
+.city-details-close {
+  display: none;
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 10;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s;
+}
+
+.city-details-close:hover {
+  background: #f5f5f5;
+}
+
+/* Show close button on all screens */
+.floating-city-details .city-details-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Marker styles are now inline in GlobeView.tsx */
+
+/* Custom scrollbar styling */
+.floating-sidebar aside::-webkit-scrollbar,
+.floating-sidebar aside>div::-webkit-scrollbar {
+  width: 8px;
+}
+
+.floating-sidebar aside::-webkit-scrollbar-track,
+.floating-sidebar aside>div::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.floating-sidebar aside::-webkit-scrollbar-thumb,
+.floating-sidebar aside>div::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.floating-sidebar aside::-webkit-scrollbar-thumb:hover,
+.floating-sidebar aside>div::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .floating-sidebar {
+    left: 16px;
+    top: 100px;
+    transform: translateX(0);
+  }
+
+  .floating-sidebar:not(.open) {
+    transform: translateX(calc(-100% - 16px));
+  }
+
+  .sidebar-chevron-toggle {
+    display: flex;
+    right: -32px;
+  }
+
+  .floating-sidebar aside {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  .floating-city-details {
+    width: 90vw;
+    left: 5vw;
+    right: 5vw;
+    top: auto;
+    bottom: 16px;
+    min-width: 0;
+    max-width: 98vw;
+    border-radius: 16px 16px 8px 8px;
+    box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.12);
+    z-index: 150;
+    animation: slideUpSheet 0.3s cubic-bezier(.4, 0, .2, 1);
+  }
+
+  .city-details-close {
+    display: flex !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .floating-sidebar {
+    left: 0;
+    top: 100px;
+    height: calc(100vh - 100px);
+    border-radius: 0 8px 8px 0;
+  }
+
+  .floating-sidebar:not(.open) {
+    transform: translateX(calc(-100%));
+  }
+
+  .sidebar-chevron-toggle {
+    right: -32px;
+  }
+
+  .floating-sidebar aside {
+    border-radius: 0 8px 8px 0;
+    max-height: 100%;
+  }
+
+  .floating-city-details {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    margin: 0 auto;
+    min-width: 0;
+    max-width: 100vw;
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.12);
+    padding-bottom: 48px;
+    z-index: 200;
+    animation: slideUpSheet 0.3s cubic-bezier(.4, 0, .2, 1);
+  }
+}
+
+@keyframes slideUpSheet {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
