@@ -11,12 +11,12 @@ import citiesData from "./data/cities.json";
 function App() {
   const [selectedCity, setSelectedCity] = useState<any | null>(null);
   const [center, setCenter] = useState<[number, number]>([0, 20]);
-  const [zoom, setZoom] = useState(1.2);
+  const [zoom, setZoom] = useState(3);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settings, setSettings] = useState<SettingsType>({
-    mapProvider: "maplibre",
-    mapStyle: "satellite",
+    mapProvider: "maplibre", // Not used anymore, keeping for compatibility
+    mapStyle: "default",
     autoZoom: true,
     showMarkers: true,
     markerSize: "medium",
@@ -75,6 +75,7 @@ function App() {
           markerSize={settings.markerSize}
           mapProvider={settings.mapProvider}
           mapStyle={settings.mapStyle}
+          selectedCity={selectedCity}
           selectedMarkerId={
             selectedCity
               ? `${
@@ -95,10 +96,7 @@ function App() {
       </div>
 
       {/* Floating Sidebar with chevron toggle */}
-      <div
-        className={`floating-sidebar${sidebarOpen ? " open" : ""}`}
-        style={{ zIndex: 30 }}
-      >
+      <div className={`floating-sidebar${sidebarOpen ? " open" : ""}`}>
         <Sidebar
           data={citiesData}
           onCityClick={(_: string, city: any) => {
@@ -110,7 +108,13 @@ function App() {
         <button
           className="sidebar-chevron-toggle"
           aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
-          onClick={() => setSidebarOpen((v) => !v)}
+          onClick={() => {
+            setSidebarOpen((v) => !v);
+            // Close city card when chevron is clicked
+            if (selectedCity) {
+              setSelectedCity(null);
+            }
+          }}
         >
           <span style={{ fontSize: 20, lineHeight: 1 }}>
             {sidebarOpen ? "◀" : "▶"}

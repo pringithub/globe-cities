@@ -1,7 +1,7 @@
 // using new JSX transform — no default React import needed
 
 export type SettingsType = {
-  mapProvider: "maplibre" | "google";
+  mapProvider: "maplibre" | "google"; // Kept for compatibility but not used
   mapStyle: "default" | "satellite" | "terrain";
   autoZoom: boolean;
   showMarkers: boolean;
@@ -78,8 +78,8 @@ export default function Settings({
           </button>
         </div>
 
-        {/* Map Provider */}
-        <div style={{ marginBottom: 20 }}>
+        {/* Map Provider - Hidden since we only use Leaflet now */}
+        <div style={{ marginBottom: 20, display: "none" }}>
           <label
             style={{
               display: "block",
@@ -106,8 +106,7 @@ export default function Settings({
               fontSize: 14,
             }}
           >
-            <option value="maplibre">MapLibre (Open Source)</option>
-            <option value="google">Google Maps</option>
+            <option value="maplibre">Leaflet (Open Source)</option>
           </select>
         </div>
 
